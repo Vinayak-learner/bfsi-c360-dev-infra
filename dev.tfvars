@@ -1,0 +1,4 @@
+project_id = "bfsi-customer360-platform"
+region     = "us-central1"
+deployment_sa   = "terraform-runner-dev@bfsi-customer360-platform.iam.gserviceaccount.com"
+#deployment_sa   = "terraform-runner-dev@poc-project-data-engineer.iam.gserviceaccount.com"
