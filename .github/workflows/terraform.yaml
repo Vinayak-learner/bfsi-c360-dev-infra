@@ -1,0 +1,57 @@
+name: "Terraform Plan & Apply"
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure Terraform Cloud credentials
+        run: |
+          rm -f ~/.terraform.d/credentials.tfrc.json
+          mkdir -p ~/.terraform.d
+          cat > ~/.terraform.d/credentials.tfrc.json <<EOF
+          {
+            "credentials": {
+              "app.terraform.io": {
+                "token": "${TF_API_TOKEN}"
+              }
+            }
+          }
+          EOF
+        env:
+          TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.5
+
+      #- name: Authenticate to Google Cloud via Workload Identity Federation
+      #  uses: google-github-actions/auth@v2
+      #  with:
+      #    workload_identity_provider: ${{ secrets.TFC_GCP_WORKLOAD_IDENTITY_PROVIDER }}
+      #    service_account: ${{ secrets.TFC_GCP_SERVICE_ACCOUNT_EMAIL }}
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Show Terraform Cloud Workspace
+        run: terraform workspace show
+
+      - name: Terraform Plan
+        run: terraform plan -var-file="dev.tfvars"
+        
+      - name: Terraform apply
+        run: terraform apply -var-file="dev.tfvars" -auto-approve
