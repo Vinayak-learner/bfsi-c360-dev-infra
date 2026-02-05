@@ -8,9 +8,9 @@ output "debug_google_access" {
 
   value = {
 
-    project = data.google_client_config.current.project
+    project = data.google_client_config.current1.project
 
-    region  = data.google_client_config.current.region
+    region  = data.google_client_config.current1.region
 
   }
 
@@ -24,7 +24,7 @@ data "google_project" "current2" {
  
 output "debug_project_number" {
 
-  value = data.google_project.current.number
+  value = data.google_project.current2.number
 
 }
  
