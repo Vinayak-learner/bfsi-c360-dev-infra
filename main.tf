@@ -2,7 +2,7 @@ data "google_client_config" "current" {}
 output "who_am_i" {
   value = data.google_client_config.current.access_token != ""
 }
-data "google_client_config" "current" {}
+data "google_client_config" "current1" {}
  
 output "debug_google_access" {
 
@@ -16,7 +16,7 @@ output "debug_google_access" {
 
 }
  
-data "google_project" "current" {
+data "google_project" "current2" {
 
   project_id = var.project_id
 
