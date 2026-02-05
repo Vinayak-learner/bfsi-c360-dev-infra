@@ -38,11 +38,11 @@ jobs:
         with:
           terraform_version: 1.9.5
 
-    #  - name: Authenticate to Google Cloud via Workload Identity Federation
-    #   uses: google-github-actions/auth@v2
-    #    with:
-    #     workload_identity_provider: ${{ secrets.TFC_GCP_WORKLOAD_IDENTITY_PROVIDER }}
-    #    service_account: ${{ secrets.TFC_GCP_SERVICE_ACCOUNT_EMAIL }}
+      - name: Authenticate to Google Cloud via Workload Identity Federation
+        uses: google-github-actions/auth@v2
+        with:
+         workload_identity_provider: ${{ secrets.TFC_GCP_WORKLOAD_IDENTITY_PROVIDER }}
+         service_account: ${{ secrets.TFC_GCP_SERVICE_ACCOUNT_EMAIL }}
 
       - name: Terraform Init
         run: terraform init
