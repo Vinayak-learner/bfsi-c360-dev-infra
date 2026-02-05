@@ -1,8 +1,33 @@
-#data "google_client_config" "current" {}
-#output "who_am_i" {
- # value = data.google_client_config.current.access_token != ""
-#}
+data "google_client_config" "current" {}
+output "who_am_i" {
+  value = data.google_client_config.current.access_token != ""
+}
+data "google_client_config" "current" {}
+ 
+output "debug_google_access" {
 
+  value = {
+
+    project = data.google_client_config.current.project
+
+    region  = data.google_client_config.current.region
+
+  }
+
+}
+ 
+data "google_project" "current" {
+
+  project_id = var.project_id
+
+}
+ 
+output "debug_project_number" {
+
+  value = data.google_project.current.number
+
+}
+ 
 
 resource "google_storage_bucket" "code_bucket" {
   name     = "bfsi-c360-dev-code_temp"
